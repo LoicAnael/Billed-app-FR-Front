@@ -9,7 +9,7 @@ export default class Login {
     this.localStorage = localStorage
     this.onNavigate = onNavigate
     this.PREVIOUS_LOCATION = PREVIOUS_LOCATION
-    this.store = store
+    this.store = store//correction d'une erreur de frappe du S a la fin du mot store
     const formEmployee = this.document.querySelector(`form[data-testid="form-employee"]`)
     formEmployee.addEventListener("submit", this.handleSubmitEmployee)
     const formAdmin = this.document.querySelector(`form[data-testid="form-admin"]`)

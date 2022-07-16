@@ -3,24 +3,30 @@ import ErrorPage from "./ErrorPage.js"
 import LoadingPage from "./LoadingPage.js"
 
 import Actions from './Actions.js'
+import { formatDate } from '../app/format.js'
 
 const row = (bill) => {
   return (`
     <tr>
       <td>${bill.type}</td>
       <td>${bill.name}</td>
-      <td>${bill.date}</td>
+      <td data-testid="format-date">${bill.date}</td>
       <td>${bill.amount} €</td>
       <td>${bill.status}</td>
       <td>
-        ${Actions(bill.fileUrl)}
+      ${Actions(bill.fileUrl)}
       </td>
-    </tr>
-    `)
-  }
-
+      </tr>
+      `)
+    }
 const rows = (data) => {
-  return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
+      ////////resolution de l'issue pour le bug 1 ([bug repport] - Bill)
+      data.sort((a, b) => {
+        const dateB = Date.parse(b.date);
+        const dateA = Date.parse(a.date);
+        return dateB - dateA;
+      });
+    return data && data.length ? data.map((bill) => row(bill)).join("") : "";
 }
 
 export default ({ data: bills, loading, error }) => {
