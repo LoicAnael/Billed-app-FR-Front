@@ -20,12 +20,14 @@ const row = (bill) => {
       `)
     }
 const rows = (data) => {
-      ////////resolution de l'issue pour le bug 1 ([bug repport] - Bill)
-      data.sort((a, b) => {
-        const dateB = Date.parse(b.date);
-        const dateA = Date.parse(a.date);
-        return dateB - dateA;
-      });
+      ////////resolution de l'issue pour le bug 1
+  if (data && data.length) {
+    data.sort((a, b) => {
+      const dateB = Date.parse(b.date);
+      const dateA = Date.parse(a.date);
+      return dateB - dateA;
+    });  
+  }
     return data && data.length ? data.map((bill) => row(bill)).join("") : "";
 }
 
