@@ -30,8 +30,9 @@ describe("Given I am connected as an employee", () => {
     })
     
     test("Then bills should be ordered from earliest to latest", () => {
-    document.body.innerHTML = BillsUI({ data: bills })
+      document.body.innerHTML = BillsUI({ data: bills })   
     const dates = screen.getAllByTestId('format-date').map(a => a.innerHTML);
+    console.log({dates})
     const antiChrono = (a, b) => ((a < b) ? 1 : -1);
       const datesSorted = [...dates].sort(antiChrono);
       expect(dates).toEqual(datesSorted);
