@@ -20,6 +20,7 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length - 1]
+    ////////resolution bug 3
     console.log(file)
     let fileType = file.type.split('/')[1]
     console.log(fileType)

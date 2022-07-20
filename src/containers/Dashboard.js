@@ -72,9 +72,11 @@ export default class {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
+    //document.getElementById('#arrow-icon1').addEventListener('click', (e) => this.handleShowTickets(e, bills, 1))
     $('#arrow-icon1').click((e) => this.handleShowTickets(e, bills, 1))
     $('#arrow-icon2').click((e) => this.handleShowTickets(e, bills, 2))
     $('#arrow-icon3').click((e) => this.handleShowTickets(e, bills, 3))
+    console.log($('#arrow-icon1'))
     new Logout({ localStorage, onNavigate })
   }
 
@@ -131,6 +133,11 @@ export default class {
   }
 
   handleShowTickets(e, bills, index) {
+    //resolution bug 4
+      bills.forEach(bill => {
+        $(`#open-bill${bill.id}`).off('click');
+        console.log($(`#open-bill${bill.id}`))
+    })
     if (this.counter === undefined || this.index !== index) this.counter = 0
     if (this.index === undefined || this.index !== index) this.index = index
     if (this.counter % 2 === 0) {
