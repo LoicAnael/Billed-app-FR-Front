@@ -5,7 +5,7 @@ import {getAllByText, getAllByTestId , getByTestId, queryAllByTestId} from '@tes
 import {screen, waitFor} from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
-import { ROUTES_PATH} from "../constants/routes.js";
+import {ROUTES, ROUTES_PATH} from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
 import userEvent from '@testing-library/user-event'
 import Bills from "../containers/Bills.js"
@@ -44,9 +44,8 @@ describe("Given I am connected as an employee", () => {
   ////////ajout des tests unitaires et d'integrations/////////
   
     test("Then click on eye icon", () => {
-    document.body.innerHTML  = BillsUI({ data: bills });
-          
-    const BillsPage = new Bills({
+      document.body.innerHTML  = BillsUI({ data: bills });
+      const BillsPage = new Bills({
         document, onNavigate, store, localStorage: window.localStorage
       });
   
@@ -61,6 +60,9 @@ describe("Given I am connected as an employee", () => {
   
         expect(iconEyes).toBeTruthy();
         expect(handleClickIconEye).toHaveBeenCalled();
+
+        const modale = screen.getByTestId('modalFileEmployee')
+        expect(modale).toBeTruthy()
       }
     });
   
@@ -77,7 +79,11 @@ describe("Given I am connected as an employee", () => {
       newBillBtn.addEventListener("click", handleClickNewBill);
       userEvent.click(newBillBtn)
       expect(handleClickNewBill).toHaveBeenCalled();
+
+      const modale = screen.getByTestId('icon-window')
+      expect(modale).toBeTruthy()
     });
    
 })
+
 
