@@ -1,15 +1,15 @@
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
-export default class NewBill {
+export default class newBill{
   constructor({ document, onNavigate, store, localStorage }) {
     this.document = document
     this.onNavigate = onNavigate
     this.store = store
-   // const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
+    //const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     //formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
-    file.addEventListener("change", this.handleChangeFile)
+    file?.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
     this.billId = null
