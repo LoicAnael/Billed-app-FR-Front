@@ -9,6 +9,7 @@ export default class newBill{
     //const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
     //formNewBill.addEventListener("submit", this.handleSubmit)
     const file = this.document.querySelector(`input[data-testid="file"]`)
+      console.log(file)
     file?.addEventListener("change", this.handleChangeFile)
     this.fileUrl = null
     this.fileName = null
@@ -21,11 +22,13 @@ export default class newBill{
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length - 1]
     ////////resolution bug 3
-    console.log(file)
     let fileType = file.type.split('/')[1]
     console.log(fileType)
     if (fileType !== "jpg" && fileType !== "png" && fileType !== "jpeg") {
-      alert("choisissez un fichier de type image")
+      alert("choisissez un fichier de type image");
+      const file = this.document.querySelector(`input[data-testid="file"]`)
+      console.log(file)
+      file.classList.add('format-error')
     } else {
       const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
       formNewBill.addEventListener("submit", this.handleSubmit)
@@ -33,6 +36,10 @@ export default class newBill{
       const email = JSON.parse(localStorage.getItem("user")).email
       formData.append('file', file)
       formData.append('email', email)
+      const fileImg = this.document.querySelector(`input[data-testid="file"]`)
+      if (fileImg.classList.contains("format-error")) {
+        fileImg.classList.remove('format-error')
+      }
   
       this.store
         .bills()
