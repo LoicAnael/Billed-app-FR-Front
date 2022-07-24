@@ -35,5 +35,18 @@ describe("Given I am connected as an employee", () => {
       document.body.innerHTML = NewBillUI()
       expect(screen.getByTestId('form-new-bill')).toHaveLength(9)
     })
+
+    test('Then, verification of the submit event and its default action', () => {
+      document.body.innerHTML = NewBillUI()
+      const newBill = new NewBill({
+        document, onNavigate, store, localStorage: window.localStorage
+    })
+      const handleSubmit = jest.fn((e) => newBill.handleSubmit(e))
+      const form = screen.getByTestId("form-new-bill");
+      form.addEventListener("submit", handleSubmit);
+      fireEvent.submit(form);
+      expect(handleSubmit).toHaveBeenCalled()
+      expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
+    })   
   })
 })
