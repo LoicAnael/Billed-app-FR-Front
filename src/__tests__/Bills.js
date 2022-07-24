@@ -1,15 +1,16 @@
 /**
  * @jest-environment jsdom
  */
-import {getAllByText, getAllByTestId , getByTestId, queryAllByTestId} from '@testing-library/dom'
-import {screen, waitFor} from "@testing-library/dom"
+import { getAllByText, getByText, getAllByTestId, getByTestId, queryAllByTestId } from '@testing-library/dom'
+import userEvent from '@testing-library/user-event'
+import { screen, waitFor, fireEvent } from "@testing-library/dom"
 import BillsUI from "../views/BillsUI.js"
 import { bills } from "../fixtures/bills.js"
 import {ROUTES, ROUTES_PATH} from "../constants/routes.js";
 import { localStorageMock } from "../__mocks__/localStorage.js";
-import userEvent from '@testing-library/user-event'
 import Bills from "../containers/Bills.js"
 import store from "../__mocks__/store"
+import mockStore from "../__mocks__/store"
 
 import router from "../app/Router.js";
 
@@ -87,3 +88,51 @@ describe("Given I am connected as an employee", () => {
 })
 
 
+// test d'integration GET
+
+
+  describe("When an error occurs on API", () => { //erreur sur l'api
+    beforeEach(() => {
+      jest.spyOn(mockStore, 'bills')
+      Object.defineProperty(window, 'localStorage', {
+        value: localStorageMock
+      })
+      window.localStorage.setItem(
+        'user',
+        JSON.stringify({
+          type: 'Employee',
+          email: 'a@a'
+        })
+      )
+      const root = document.createElement('div')
+      root.setAttribute('id', 'root')
+      document.body.appendChild(root)
+      router()
+    })
+
+    test("Then i fetch the invoices in the api and it fails with a 404 error", async () => {//recupère les facture api et echoue avec erreur 404
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          list: () => {
+            return Promise.reject(new Error("Erreur 404"))
+          }
+        }
+      })
+      window.onNavigate(ROUTES_PATH.Bills)
+      await new Promise(process.nextTick)
+     // expect(screen.getByText(/Erreur 404/)).toBeTruthy()
+    })
+
+    test("Then i fetch the invoices in the api and it fails with a 500 error", async () => {//recupère les facture api et echoue avec erreur 500
+      mockStore.bills.mockImplementationOnce(() => {
+        return {
+          list: () => {
+            return Promise.reject(new Error("Erreur 500"))
+          }
+        }
+      })
+      window.onNavigate(ROUTES_PATH.Bills)
+      await new Promise(process.nextTick)
+     // expect(screen.getByText(/Erreur 500/)).toBeTruthy()
+    })
+  })
