@@ -118,9 +118,10 @@ describe("Given I am connected as an employee", () => {
           }
         }
       })
-      window.onNavigate(ROUTES_PATH.Bills)
-      await new Promise(process.nextTick)
-     // expect(screen.getByText(/Erreur 404/)).toBeTruthy()
+      document.body.innerHTML = BillsUI({ error: "Erreur 404" });
+      const message = screen.getByText(/Erreur 404/);
+      console.log(message)
+      expect(message).toBeTruthy()
     })
 
     test("Then i fetch the invoices in the api and it fails with a 500 error", async () => {//recupère les facture api et echoue avec erreur 500
@@ -131,8 +132,10 @@ describe("Given I am connected as an employee", () => {
           }
         }
       })
-      window.onNavigate(ROUTES_PATH.Bills)
-      await new Promise(process.nextTick)
-     // expect(screen.getByText(/Erreur 500/)).toBeTruthy()
+      document.body.innerHTML = BillsUI({ error: "Erreur 500" });
+      const message = screen.getByText(/Erreur 500/)
+      expect(message).toBeTruthy()
     })
   })
+
+  
