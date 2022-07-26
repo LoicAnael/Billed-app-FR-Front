@@ -50,50 +50,33 @@ describe("Given I am connected as an employee", () => {
       expect(screen.getByText("Envoyer une note de frais")).toBeTruthy();
     })   
 
-    describe("When I upload an image in file input", () => {
-      describe("If the file is not an image", () => {
-        test("Then the file format should be invalid", () => {
-          document.body.innerHTML = NewBillUI();
-          const newBill = new NewBill({ document, onNavigate, store, localStorage });
-          const changeFile = jest.fn(newBill.handleChangeFile);
-          const file = screen.getByTestId("file");
-      
-          file.addEventListener("change", changeFile);
-          fireEvent.change(file, {
-            target: {
-              files: [new File(["file"], "file.css", { type: "doc/css" })],
-            },
-          });
-
-          expect(changeFile).toHaveBeenCalled();
-          expect(file.classList.contains('format-error')).toBe(true);
-        })
-      });
-
-      describe("If the file is an image format", () => {
-        test("Then the file format should be valid", () => {
-          document.body.innerHTML = NewBillUI();
-          const newBill = new NewBill({ document, onNavigate, store, localStorage });
-          const changeFile = jest.fn(newBill.handleChangeFile);
-          const file = screen.getByTestId("file");
-      
-          file.addEventListener("change", changeFile);
-          fireEvent.change(file, {
-            target: {
-              files: [new File(["file"], "file.png", { type: "image/png" })],
-            },
-          });
-
-          expect(changeFile).toHaveBeenCalled();
-          expect(file.classList.contains('format-error')).toBe(false);
-        })
-      });
-      test("Then the file name should be displayed into the input", () => {
+  describe("When I upload an image in file input", () => {
+    describe("If the file is not an image", () => {
+      test("Then the file format should be invalid", () => {
         document.body.innerHTML = NewBillUI();
         const newBill = new NewBill({ document, onNavigate, store, localStorage });
         const changeFile = jest.fn(newBill.handleChangeFile);
         const file = screen.getByTestId("file");
-        
+    
+        file.addEventListener("change", changeFile);
+        fireEvent.change(file, {
+          target: {
+            files: [new File(["file"], "file.css", { type: "doc/css" })],
+          },
+        });
+
+        expect(changeFile).toHaveBeenCalled();
+        expect(file.classList.contains('format-error')).toBe(true);
+      })
+    });
+
+    describe("If the file is an image format", () => {
+      test("Then the file format should be valid", () => {
+        document.body.innerHTML = NewBillUI();
+        const newBill = new NewBill({ document, onNavigate, store, localStorage });
+        const changeFile = jest.fn(newBill.handleChangeFile);
+        const file = screen.getByTestId("file");
+    
         file.addEventListener("change", changeFile);
         fireEvent.change(file, {
           target: {
@@ -102,7 +85,8 @@ describe("Given I am connected as an employee", () => {
         });
 
         expect(changeFile).toHaveBeenCalled();
-        expect(file.files[0].name).toBe("file.png");
+        expect(file.classList.contains('format-error')).toBe(false);
+      })
       });
     })
   })
