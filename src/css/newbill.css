@@ -61,3 +61,21 @@ textarea:focus, input:focus, select:focus {
 *[placeholder] {
   color: #0E5AE5 !important;
 }
+.format-error{
+  border: 3px solid rgb(134, 6, 6) !important;
+}
+.form-data[data-error]::after {
+  content: attr(data-error);
+  font-size: 12px;
+  color: rgb(134, 6, 6);
+  display: block;
+  margin: 7px 0;
+  text-align: left;
+  opacity: 0;
+}
+
+input[data-error]::after {
+  content: attr(data-error);
+  font-size: 12px;
+  color: rgb(134, 6, 6);
+}

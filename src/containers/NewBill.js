@@ -25,10 +25,10 @@ export default class newBill{
     let fileType = file.type.split('/')[1]
     console.log(fileType)
     if (fileType !== "jpg" && fileType !== "png" && fileType !== "jpeg") {
-      alert("choisissez un fichier de type image");
       const file = this.document.querySelector(`input[data-testid="file"]`)
-      console.log(file)
       file.classList.add('format-error')
+      file.setAttribute("data-error-visible", "true");
+      file.setAttribute("data-error", "format incorrect")
     } else {
       const formNewBill = this.document.querySelector(`form[data-testid="form-new-bill"]`)
       formNewBill.addEventListener("submit", this.handleSubmit)
@@ -39,6 +39,8 @@ export default class newBill{
       const fileImg = this.document.querySelector(`input[data-testid="file"]`)
       if (fileImg.classList.contains("format-error")) {
         fileImg.classList.remove('format-error')
+        fileImg.setAttribute("data-error-visible", "false");
+        fileImg.setAttribute("data-error", "")
       }
   
       this.store
