@@ -21,14 +21,7 @@ const row = (bill) => {
     }
 const rows = (data) => {
       ////////resolution de l'issue pour le bug 1
-  if (data && data.length) {
-    data.sort((a, b) => {
-      const dateB = Date.parse(b.date);
-      const dateA = Date.parse(a.date);
-      return dateB - dateA;
-    });  
-  }
-    return data && data.length ? data.map((bill) => row(bill)).join("") : "";
+   return (data && data.length) ? data.sort((a, b) => ((a.date < b.date) ? 1 : -1)).map(bill => row(bill)).join("") : ""
 }
 
 export default ({ data: bills, loading, error }) => {
